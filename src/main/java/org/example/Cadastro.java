@@ -3,6 +3,6 @@ package org.example;
 import java.util.List;
 
 public interface Cadastro {
-    public abstract void cadastrar(Object obj);
-    public abstract void listar(List<Object> entidade);
+    public abstract void cadastrar(Usuario usuario);
+    public abstract void listar(List<Usuario> usuario);
 }
