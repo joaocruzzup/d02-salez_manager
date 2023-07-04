@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BancoDeVendas {
-    BancoVendedoresClientes bancoVendedoresClientes = new BancoVendedoresClientes();
+    BancoDeClientes bancoDeClientes = new BancoDeClientes();
+    BancoDeVendedores bancoDeVendedores = new BancoDeVendedores();
     private List<Venda> listaVendas = new ArrayList<>();
 
     public void cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente){
-        if (bancoVendedoresClientes.verificarClienteExiste(cliente.getCpf()) && bancoVendedoresClientes.verificarVendedorExiste(vendedor.getCpf())) {
+        if (bancoDeClientes.verificarClienteExiste(cliente.getCpf()) && bancoDeVendedores.verificarVendedorExiste(vendedor.getCpf())) {
             venda.setCliente(cliente);
             venda.setVendedor(vendedor);
             listaVendas.add(venda);
