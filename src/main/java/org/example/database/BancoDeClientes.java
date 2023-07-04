@@ -9,10 +9,10 @@ public class BancoDeClientes {
     private List<Cliente> listaClientes = new ArrayList<>();
 
     public void cadastrarCliente(Cliente cliente){
-        if (verificarClienteExiste(cliente.getCpf())){
+        if (!verificarClienteExiste(cliente.getCpf())){
             listaClientes.add(cliente);
         } else {
-            throw new IllegalArgumentException("Erro: Cliente não cadastrado");
+            throw new IllegalArgumentException("Erro: Cliente já cadastrado");
         }
     }
 
