@@ -9,20 +9,7 @@ public class BancoDeVendedores {
     private List<Vendedor> listaVendedores = new ArrayList<>();
 
     public void cadastrarVendedor(Vendedor vendedor){
-        if (!verificarVendedorExiste(vendedor.getCpf())){
-            listaVendedores.add(vendedor);
-        } else {
-            throw new IllegalArgumentException("Erro: vendedor já existe");
-        }
-    }
-
-    public boolean verificarVendedorExiste(String cpf){
-        for (Vendedor vendedor: listaVendedores) {
-            if (vendedor.getCpf().equalsIgnoreCase(cpf)){
-                return true;
-            }
-        }
-        return false;
+        listaVendedores.add(vendedor);
     }
 
     public List<Vendedor> getListaVendedores() {
