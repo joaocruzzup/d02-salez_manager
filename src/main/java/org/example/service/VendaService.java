@@ -8,7 +8,9 @@ import org.example.model.Usuario;
 import org.example.model.Venda;
 import org.example.model.Vendedor;
 
-public class VendasService {
+import static org.example.utils.Formatador.*;
+
+public class VendaService {
     private BancoDeVendedores bancoDeVendedores = new BancoDeVendedores();
     private BancoDeClientes bancoDeClientes = new BancoDeClientes();
     private BancoDeVendas bancoDeVendas = new BancoDeVendas();
@@ -36,15 +38,21 @@ public class VendasService {
     }
 
     public void listarVendas() {
-        System.out.println(bancoDeVendas.getListaVendas());
+        for (Venda venda: bancoDeVendas.getListaVendas()) {
+            System.out.println(
+                    "CPF VENDEDOR: " + formatarCpf(venda.getVendedor().getCpf())  +
+                            " | CPF CLIENTE: " + formatarCpf(venda.getCliente().getCpf()) +
+                            " | VALOR: " + formatarValor(venda.getValor()) +
+                            " | DATA: " + formatarData(venda.getDataRegistro()));
+        }
     }
 
     public void listarClientes() {
         for (Cliente cliente: bancoDeClientes.getListaClientes()) {
             System.out.println(
                     "NOME: " + cliente.getNome() +
-                            "CPF: " + cliente.getCpf() +
-                            "EMAIL: " + cliente.getEmail());
+                            " | CPF: " + formatarCpf(cliente.getCpf()) +
+                            " | EMAIL: " + cliente.getEmail());
         }
     }
 
@@ -52,8 +60,8 @@ public class VendasService {
         for (Vendedor vendedor: bancoDeVendedores.getListaVendedores()) {
             System.out.println(
                     "NOME: " + vendedor.getNome() +
-                            "CPF: " + vendedor.getCpf() +
-                            "EMAIL: " + vendedor.getEmail());
+                            " | CPF: " + formatarCpf(vendedor.getCpf()) +
+                            " | EMAIL: " + vendedor.getEmail());
         }
     }
 
