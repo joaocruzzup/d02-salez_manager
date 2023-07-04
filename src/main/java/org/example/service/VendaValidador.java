@@ -9,10 +9,7 @@ import org.example.model.Cliente;
 import org.example.model.Usuario;
 import org.example.model.Vendedor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class VendaValidador implements ValidaCliente, ValidaVendedor{
+public class VendaValidador implements ValidaUsuario {
     private BancoDeClientes bancoDeClientes;
     private BancoDeVendedores bancoDeVendedores;
 
@@ -22,17 +19,17 @@ public class VendaValidador implements ValidaCliente, ValidaVendedor{
     }
 
     @Override
-    public boolean validarEmailVendedor(Vendedor vendedorDigitado) throws EmailInvalidoException {
-        if (!vendedorDigitado.getEmail().contains("@")){
+    public boolean validarEmail(Usuario usuario) throws EmailInvalidoException {
+        if (!usuario.getEmail().contains("@")) {
             throw new EmailInvalidoException("Erro: E-mail não contém @");
         }
         return true;
     }
 
     @Override
-    public boolean validarEmailRepetidoVendedor(Vendedor vendedorDigitado) throws EmailRepetidoException {
-        for (Vendedor vendedor: bancoDeVendedores.getListaVendedores()) {
-            if (vendedor.getEmail().equalsIgnoreCase(vendedorDigitado.getEmail())){
+    public boolean validarEmailRepetido(Usuario usuarioDigitado) throws EmailRepetidoException {
+        for (Usuario usuario : bancoDeClientes.getListaClientes()) {
+            if (usuario.getEmail().equalsIgnoreCase(usuarioDigitado.getEmail())) {
                 throw new EmailRepetidoException("Erro: E-mail já cadastrado");
             }
         }
@@ -40,43 +37,23 @@ public class VendaValidador implements ValidaCliente, ValidaVendedor{
     }
 
     @Override
-    public boolean validarCpfExisteVendedor(Vendedor vendedorDigitado) throws CpfJaExistenteException {
-        for (Vendedor vendedor: bancoDeVendedores.getListaVendedores()) {
-            if (vendedor.getCpf().equalsIgnoreCase(vendedorDigitado.getCpf())){
-                return true;
+    public boolean validarCpfExiste(Usuario usuarioDigitado) throws CpfJaExistenteException {
+        if (usuarioDigitado instanceof Cliente) {
+            for (Cliente usuario : bancoDeClientes.getListaClientes()) {
+                if (usuario.getCpf().equalsIgnoreCase(usuarioDigitado.getCpf())) {
+                    return true;
+                }
             }
+            return false;
+        }
+        if (usuarioDigitado instanceof Vendedor) {
+            for (Vendedor usuario : bancoDeVendedores.getListaVendedores()) {
+                if (usuario.getCpf().equalsIgnoreCase(usuarioDigitado.getCpf())) {
+                    return true;
+                }
+            }
+            return false;
         }
         return false;
     }
-
-    @Override
-    public boolean validarEmailCliente(Cliente clienteDigitado) throws EmailInvalidoException {
-        if (!clienteDigitado.getEmail().contains("@")){
-            throw new EmailInvalidoException("Erro: E-mail não contém @");
-        }
-        return true;
-    }
-
-    @Override
-    public boolean validarEmailRepetidoCliente(Cliente clienteDigitado) throws EmailRepetidoException {
-        for (Cliente cliente: bancoDeClientes.getListaClientes()) {
-            if (cliente.getEmail().equalsIgnoreCase(clienteDigitado.getEmail())){
-                throw new EmailRepetidoException("Erro: E-mail já cadastrado");
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean validarCpfExisteCliente(Cliente clienteDigitado) throws CpfJaExistenteException {
-        for (Cliente cliente: bancoDeClientes.getListaClientes()) {
-            if (cliente.getCpf().equalsIgnoreCase(clienteDigitado.getCpf())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
 }

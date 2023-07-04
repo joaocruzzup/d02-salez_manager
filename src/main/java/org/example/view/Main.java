@@ -1,4 +1,6 @@
 package org.example.view;
+import org.example.Exceptions.CpfJaExistenteException;
+import org.example.Exceptions.UsuarioNaoCadastradoException;
 import org.example.controller.ClienteController;
 import org.example.controller.VendaController;
 import org.example.controller.VendedorController;
@@ -11,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CpfJaExistenteException, UsuarioNaoCadastradoException {
         // Criação dos controladores
         VendaService vendaService = new VendaService();
 
@@ -42,8 +44,8 @@ public class Main {
         Venda venda4 = new Venda(cliente4, vendedor4, BigDecimal.valueOf(200.0), LocalDate.now());
         vendaController.cadastrar(venda1, vendedor1, cliente1);
         vendaController.cadastrar(venda2, vendedor2, cliente2);
-        vendaController.cadastrar(venda3, vendedor3, cliente3);
-        vendaController.cadastrar(venda4, vendedor4, cliente4);
+//        vendaController.cadastrar(venda3, vendedor3, cliente3);
+//        vendaController.cadastrar(venda4, vendedor4, cliente4);
 
         // Listagem de vendas, vendedores e clientes
         System.out.println("Vendas cadastradas:");
