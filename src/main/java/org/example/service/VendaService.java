@@ -19,8 +19,9 @@ public class VendaService {
     private VendaValidador vendaValidador = new VendaValidador(bancoDeClientes, bancoDeVendedores);
 
 
+
     public void cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente) throws UsuarioNaoCadastradoException, CpfJaExistenteException {
-        boolean existeClienteVendedor = vendaValidador.validarCpfExisteVendedor(vendedor) && vendaValidador.validarCpfExisteCliente(cliente);
+        boolean existeClienteVendedor = vendaValidador.validarCpfExiste(vendedor) && vendaValidador.validarCpfExiste(cliente);
         if (existeClienteVendedor){
             bancoDeVendas.cadastrarVenda(venda, vendedor, cliente);
         } else {
@@ -28,21 +29,14 @@ public class VendaService {
         }
     }
 
-    public void cadastrarCliente(Usuario usuario) throws CpfJaExistenteException {
-        boolean existeCliente = vendaValidador.validarCpfExisteCliente((Cliente) usuario);
-        if (!existeCliente){
+    public void cadastrarUsuario(Usuario usuario) throws CpfJaExistenteException {
+        boolean existeCliente = vendaValidador.validarCpfExiste(usuario);
+        if (!existeCliente && usuario instanceof Cliente){
             bancoDeClientes.cadastrarCliente((Cliente) usuario);
-        } else {
-            throw new CpfJaExistenteException("Erro: CPF já cadastrado como cliente");
-        }
-    }
-
-    public void cadastrarVendedor(Usuario usuario) throws CpfJaExistenteException {
-        boolean existeVendedor = vendaValidador.validarCpfExisteVendedor((Vendedor) usuario);
-        if (!existeVendedor){
+        } else if (!existeCliente && usuario instanceof Vendedor){
             bancoDeVendedores.cadastrarVendedor((Vendedor) usuario);
         } else {
-            throw new CpfJaExistenteException("Erro: CPF já cadastrado como vendedor");
+            throw new CpfJaExistenteException("Erro: CPF já cadastrado como cliente");
         }
     }
 

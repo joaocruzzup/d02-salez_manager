@@ -14,7 +14,7 @@ public class ClienteController implements Cadastro {
 
     @Override
     public void cadastrar(Usuario usuario) throws CpfJaExistenteException {
-        vendaService.cadastrarCliente(usuario);
+        vendaService.cadastrarUsuario(usuario);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.example.Exceptions;
 
-public class CpfRepetidoException extends Exception{
-    public CpfRepetidoException(String message) {
+public class CpfJaExistenteException extends Exception{
+    public CpfJaExistenteException(String message) {
         super(message);
     }
 }
