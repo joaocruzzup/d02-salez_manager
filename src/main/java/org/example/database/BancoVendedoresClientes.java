@@ -29,4 +29,29 @@ public class BancoVendedoresClientes {
         vendedoresClientes.put(vendedor.getCpf(), new ArrayList<>());
     }
 
+    public boolean verificarVendedorExiste(String cpf){
+        for (Vendedor vendedor: listaVendedores) {
+            if (vendedor.getCpf().equalsIgnoreCase(cpf)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean verificarClienteExiste(String cpf){
+        for (Cliente cliente: listaClientes) {
+            if (cliente.getCpf().equalsIgnoreCase(cpf)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Vendedor> getListaVendedores() {
+        return listaVendedores;
+    }
+
+    public List<Cliente> getListaClientes() {
+        return listaClientes;
+    }
 }
