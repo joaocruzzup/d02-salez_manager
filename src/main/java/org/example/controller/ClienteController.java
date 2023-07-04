@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.Exceptions.CpfJaExistenteException;
 import org.example.model.Usuario;
 import org.example.service.Cadastro;
 import org.example.service.VendaService;
@@ -12,7 +13,7 @@ public class ClienteController implements Cadastro {
     }
 
     @Override
-    public void cadastrar(Usuario usuario) {
+    public void cadastrar(Usuario usuario) throws CpfJaExistenteException {
         vendaService.cadastrarCliente(usuario);
     }
 
