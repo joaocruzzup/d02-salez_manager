@@ -19,25 +19,36 @@ public class VendaValidador implements ValidaUsuario {
     }
 
     @Override
-    public boolean validarEmail(Usuario usuario) throws EmailInvalidoException {
+    public boolean validarEmail(Usuario usuario) {
         if (!usuario.getEmail().contains("@")) {
-            throw new EmailInvalidoException("Erro: E-mail não contém @");
+            return false;
         }
         return true;
     }
 
     @Override
-    public boolean validarEmailRepetido(Usuario usuarioDigitado) throws EmailRepetidoException {
-        for (Usuario usuario : bancoDeClientes.getListaClientes()) {
-            if (usuario.getEmail().equalsIgnoreCase(usuarioDigitado.getEmail())) {
-                throw new EmailRepetidoException("Erro: E-mail já cadastrado");
+    public boolean validarEmailRepetido(Usuario usuarioDigitado) {
+        if (usuarioDigitado instanceof Cliente){
+            for (Cliente usuario : bancoDeClientes.getListaClientes()) {
+                if (usuario.getEmail().equalsIgnoreCase(usuarioDigitado.getEmail())) {
+                    return true;
+                }
             }
+            return false;
         }
-        return true;
+        if (usuarioDigitado instanceof Vendedor){
+            for (Vendedor usuario : bancoDeVendedores.getListaVendedores()) {
+                if (usuario.getEmail().equalsIgnoreCase(usuarioDigitado.getEmail())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
     @Override
-    public boolean validarCpfExiste(Usuario usuarioDigitado) throws CpfJaExistenteException {
+    public boolean validarCpfExiste(Usuario usuarioDigitado) {
         if (usuarioDigitado instanceof Cliente) {
             for (Cliente usuario : bancoDeClientes.getListaClientes()) {
                 if (usuario.getCpf().equalsIgnoreCase(usuarioDigitado.getCpf())) {

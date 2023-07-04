@@ -1,6 +1,8 @@
 package org.example.service;
 
 import org.example.Exceptions.CpfJaExistenteException;
+import org.example.Exceptions.EmailInvalidoException;
+import org.example.Exceptions.EmailRepetidoException;
 import org.example.Exceptions.UsuarioNaoCadastradoException;
 import org.example.database.BancoDeClientes;
 import org.example.database.BancoDeVendas;
@@ -20,7 +22,7 @@ public class VendaService {
 
 
 
-    public void cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente) throws UsuarioNaoCadastradoException, CpfJaExistenteException {
+    public void cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente) throws UsuarioNaoCadastradoException {
         boolean existeClienteVendedor = vendaValidador.validarCpfExiste(vendedor) && vendaValidador.validarCpfExiste(cliente);
         if (existeClienteVendedor){
             bancoDeVendas.cadastrarVenda(venda, vendedor, cliente);
@@ -29,14 +31,21 @@ public class VendaService {
         }
     }
 
-    public void cadastrarUsuario(Usuario usuario) throws CpfJaExistenteException {
-        boolean existeCliente = vendaValidador.validarCpfExiste(usuario);
-        if (!existeCliente && usuario instanceof Cliente){
+    public void cadastrarUsuario(Usuario usuario) throws CpfJaExistenteException, EmailInvalidoException, EmailRepetidoException {
+        boolean emailValido = vendaValidador.validarEmail(usuario);
+        boolean existeEmail = vendaValidador.validarEmailRepetido(usuario);
+        boolean existeUsuario = vendaValidador.validarCpfExiste(usuario);
+        boolean validado = emailValido && !existeEmail && !existeUsuario;
+        if (validado && usuario instanceof Cliente){
             bancoDeClientes.cadastrarCliente((Cliente) usuario);
-        } else if (!existeCliente && usuario instanceof Vendedor){
+        } else if (validado && usuario instanceof Vendedor){
             bancoDeVendedores.cadastrarVendedor((Vendedor) usuario);
-        } else {
-            throw new CpfJaExistenteException("Erro: CPF já cadastrado como cliente");
+        } else if (existeUsuario){
+            throw new CpfJaExistenteException("Erro: CPF já cadastrado nesse tipo de usuário");
+        } else if (!emailValido){
+            throw new EmailInvalidoException("Erro: E-mail inválido é necessário ter @");
+        } else if (existeEmail) {
+            throw new EmailRepetidoException("Erro: E-mail já cadastrado");
         }
     }
 
