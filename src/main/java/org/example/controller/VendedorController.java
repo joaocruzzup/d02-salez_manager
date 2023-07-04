@@ -2,6 +2,8 @@ package org.example.controller;
 
 
 import org.example.Exceptions.CpfJaExistenteException;
+import org.example.Exceptions.EmailInvalidoException;
+import org.example.Exceptions.EmailRepetidoException;
 import org.example.model.Usuario;
 import org.example.model.Vendedor;
 import org.example.service.Cadastro;
@@ -17,7 +19,7 @@ public class VendedorController implements Cadastro {
     }
 
     @Override
-    public void cadastrar(Usuario usuario) throws CpfJaExistenteException {
+    public void cadastrar(Usuario usuario) throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException {
         vendaService.cadastrarUsuario(usuario);
     }
 
