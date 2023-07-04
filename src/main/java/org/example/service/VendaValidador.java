@@ -1,12 +1,16 @@
 package org.example.service;
 
-import org.example.Exceptions.CpfRepetidoException;
+import org.example.Exceptions.CpfJaExistenteException;
 import org.example.Exceptions.EmailInvalidoException;
 import org.example.Exceptions.EmailRepetidoException;
 import org.example.database.BancoDeClientes;
 import org.example.database.BancoDeVendedores;
 import org.example.model.Cliente;
+import org.example.model.Usuario;
 import org.example.model.Vendedor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VendaValidador implements ValidaCliente, ValidaVendedor{
     private BancoDeClientes bancoDeClientes;
@@ -36,13 +40,13 @@ public class VendaValidador implements ValidaCliente, ValidaVendedor{
     }
 
     @Override
-    public boolean validarCpfRepetidoVendedor(Vendedor vendedorDigitado) throws CpfRepetidoException {
+    public boolean validarCpfExisteVendedor(Vendedor vendedorDigitado) throws CpfJaExistenteException {
         for (Vendedor vendedor: bancoDeVendedores.getListaVendedores()) {
             if (vendedor.getCpf().equalsIgnoreCase(vendedorDigitado.getCpf())){
-                throw new CpfRepetidoException("Erro: CPF já cadastrado");
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -64,13 +68,13 @@ public class VendaValidador implements ValidaCliente, ValidaVendedor{
     }
 
     @Override
-    public boolean validarCpfRepetidoCliente(Cliente clienteDigitado) throws CpfRepetidoException {
+    public boolean validarCpfExisteCliente(Cliente clienteDigitado) throws CpfJaExistenteException {
         for (Cliente cliente: bancoDeClientes.getListaClientes()) {
             if (cliente.getCpf().equalsIgnoreCase(clienteDigitado.getCpf())){
-                throw new CpfRepetidoException("Erro: CPF já cadastrado");
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
 
