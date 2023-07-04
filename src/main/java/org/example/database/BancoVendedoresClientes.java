@@ -1,4 +1,7 @@
-package org.example;
+package org.example.database;
+
+import org.example.model.Cliente;
+import org.example.model.Vendedor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
