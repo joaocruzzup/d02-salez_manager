@@ -1,9 +1,9 @@
 import org.example.Exceptions.*;
 import org.example.controller.ClienteController;
+import org.example.controller.VendedorController;
 import org.example.model.Cliente;
-import org.example.model.Usuario;
+import org.example.model.Vendedor;
 import org.example.service.VendaService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,51 +11,53 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.mock;
-
 @ExtendWith(MockitoExtension.class)
-public class ClienteControllerTest {
+public class VendedorControllerTest {
     @Mock
     private VendaService vendaService;
 
     @InjectMocks
-    private ClienteController clienteController;
+    private VendedorController vendedorController;
 
 
     @Test
     public void cadastrarTest() throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException, CpfInvalidoException {
-        Cliente clienteBase = new Cliente("Joao", "12345678910", "joao@example.com");
+        Vendedor vendedorBase = new Vendedor("Joao", "12345678910", "joao@example.com");
 
-        clienteController.cadastrar(clienteBase);
+        vendedorController.cadastrar(vendedorBase);
 
-        Mockito.verify(vendaService, Mockito.times(1)).cadastrarUsuario(clienteBase);
+        Mockito.verify(vendaService, Mockito.times(1)).cadastrarUsuario(vendedorBase);
     }
 
     @Test
-    public void listarTest() throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException, CpfInvalidoException {
+    public void listarTest() {
 
-        clienteController.listar();
+        vendedorController.listar();
 
-        Mockito.verify(vendaService, Mockito.times(1)).listarClientes();
+        Mockito.verify(vendaService, Mockito.times(1)).imprimirVendedores();
     }
 
     @Test
-    public void pesquisarVendasClienteTest() throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException, CpfInvalidoException {
-        Cliente clienteBase = new Cliente("Joao", "12345678910", "joao@example.com");
-        clienteController.cadastrar(clienteBase);
+    public void pesquisarVendasVendedorTest() throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException, CpfInvalidoException {
+        Vendedor vendedorBase = new Vendedor("Joao", "12345678910", "joao@example.com");
+        vendedorController.cadastrar(vendedorBase);
 
-        clienteController.pesquisarVendas("12345678910");
+        vendedorController.pesquisarVendas(vendedorBase.getEmail());
 
-        Mockito.verify(vendaService, Mockito.times(1)).pesquisarComprasCliente("12345678910");
+        Mockito.verify(vendaService, Mockito.times(1)).pesquisarVendasVendedor(vendedorBase.getEmail());
     }
 
     @Test
-    public void buscarClienteTest() throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException, CpfInvalidoException, UsuarioNaoCadastradoException {
-        Cliente clienteBase = new Cliente("Joao", "12345678910", "joao@example.com");
-        clienteController.cadastrar(clienteBase);
+    public void buscarVendedorTest() throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException, CpfInvalidoException, UsuarioNaoCadastradoException {
+        Vendedor vendedorBase = new Vendedor("Joao", "12345678910", "joao@example.com");
+        vendedorController.cadastrar(vendedorBase);
 
-        clienteController.buscaUsuario(clienteBase.getCpf());
+        vendedorController.buscaUsuario(vendedorBase.getCpf());
 
-        Mockito.verify(vendaService, Mockito.times(1)).buscarCliente(clienteBase.getCpf());
+        Mockito.verify(vendaService, Mockito.times(1)).buscarVendedor(vendedorBase.getCpf());
     }
+
+
+
+
 }
