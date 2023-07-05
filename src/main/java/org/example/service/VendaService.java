@@ -12,6 +12,11 @@ import org.example.model.Usuario;
 import org.example.model.Venda;
 import org.example.model.Vendedor;
 
+import javax.swing.plaf.PanelUI;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.example.utils.Formatador.*;
 
 public class VendaService {
@@ -74,6 +79,42 @@ public class VendaService {
                     "NOME: " + vendedor.getNome() +
                             " | CPF: " + formatarCpf(vendedor.getCpf()) +
                             " | EMAIL: " + vendedor.getEmail());
+        }
+    }
+
+    public void pesquisarComprasCliente(String cpf){
+        List<Venda> listaCompras = new ArrayList<>();
+        for (Venda venda: bancoDeVendas.getListaVendas()) {
+            if (venda.getCliente().getCpf().equalsIgnoreCase(cpf)){
+                listaCompras.add(venda);
+            }
+        }
+        if (listaCompras.size() == 0){
+            System.out.println("Não há compras cadastradas para esse cliente");
+        }
+        System.out.println("Compras do cliente do CPF: " + cpf);
+        for (Venda venda: listaCompras) {
+            System.out.println("Preço da compra: " + formatarValor(venda.getValor()) +
+                    " | Data da compra: " + formatarData(venda.getDataRegistro())  +
+                    " | Vendedor responsável: " + venda.getVendedor().getEmail());
+        }
+    }
+
+    public void pesquisarVendasVendedor (String email){
+        List<Venda> listaVendas = new ArrayList<>();
+        for (Venda venda: bancoDeVendas.getListaVendas()) {
+            if (venda.getVendedor().getEmail().equalsIgnoreCase(email)){
+                listaVendas.add(venda);
+            }
+        }
+        if (listaVendas.size() == 0){
+            System.out.println("Não há vendas cadastradas para esse vendedor");
+        }
+        System.out.println("Vendas do Vendedor do EMAIL: " + email);
+        for (Venda venda: listaVendas) {
+            System.out.println("Preço da compra: " + formatarValor(venda.getValor()) +
+                    " | Data da compra: " + formatarData(venda.getDataRegistro())  +
+                    " | Cliente: " + formatarCpf(venda.getCliente().getCpf()));
         }
     }
 
