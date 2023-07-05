@@ -19,38 +19,38 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 public class VendaServiceTest {
-    @Mock
-    private VendaService vendaService;
     @InjectMocks
-    private BancoDeVendedores bancoDeVendedores;
+    private VendaService vendaService;
 
     @InjectMocks
     private BancoDeClientes bancoDeClientes;
 
     @InjectMocks
-    private BancoDeVendas bancoDeVendas;
+    private VendaValidador vendaValidador;
 
-    @InjectMocks
-    private VendaValidador vendaValidador = new VendaValidador(bancoDeClientes, bancoDeVendedores);
-
-    //toDo CORRIGIR: Metodo não está tendo acesso ao vendaValidador
     @Test
     public void cadastrarUsuarioCorretoTest() throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException {
         Cliente clienteBase = new Cliente("Joao", "123456789", "joao@example.com");
-        vendaService.cadastrarUsuario(clienteBase);
 
-        Mockito.when(vendaService.cadastrarUsuario(clienteBase)).thenReturn(true);
-        Assertions.assertTrue(vendaService.cadastrarUsuario(clienteBase));
+        bancoDeClientes.cadastrarCliente(clienteBase);
+        boolean valido = vendaService.cadastrarUsuario(clienteBase);
+
+        // Verificando se o retorno do vendaService.cadastrarUsuario é TRUE
+        Assertions.assertTrue(valido);
     }
 
     //toDo CORRIGIR: Metodo não está tendo acesso ao vendaValidador
     @Test
     public void cadastrarUsuarioCpfRepetido() throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException {
         Cliente clienteBase = new Cliente("Joao", "123456789", "joao@example.com");
-        Cliente clienteCpfRepetido = new Cliente("Joao", "123456789", "joaocruz@example.com");
-        vendaService.cadastrarUsuario(clienteBase);
-        vendaService.cadastrarUsuario(clienteCpfRepetido);
+        Cliente clienteCpfRepetido = new Cliente("Victor", "123456789", "joaocruz@example.com");
 
+        bancoDeClientes.cadastrarCliente(clienteBase);
+        bancoDeClientes.cadastrarCliente(clienteCpfRepetido);
+
+        vendaService.cadastrarUsuario(clienteBase);
+
+        // Verificando se o método vendaService.cadastrarUsuario lança uma exceção
         assertThrows(CpfJaExistenteException.class, () -> vendaService.cadastrarUsuario(clienteCpfRepetido));
     }
 

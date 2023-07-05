@@ -41,8 +41,10 @@ public class VendaService {
         boolean validado = emailValido && !existeEmail && !existeUsuario;
         if (validado && usuario instanceof Cliente){
             bancoDeClientes.cadastrarCliente((Cliente) usuario);
+            return true;
         } else if (validado && usuario instanceof Vendedor){
             bancoDeVendedores.cadastrarVendedor((Vendedor) usuario);
+            return true;
         } else if (existeUsuario){
             throw new CpfJaExistenteException("Erro: CPF já cadastrado nesse tipo de usuário");
         } else if (!emailValido){
@@ -50,7 +52,7 @@ public class VendaService {
         } else if (existeEmail) {
             throw new EmailRepetidoException("Erro: E-mail já cadastrado");
         }
-        return true;
+        return false;
     }
 
     public void listarVendas() {
