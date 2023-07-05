@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.Exceptions.CpfJaExistenteException;
+import org.example.Exceptions.UsuarioNaoCadastradoException;
 import org.example.model.Cliente;
 import org.example.model.Venda;
 import org.example.model.Vendedor;
@@ -12,7 +14,7 @@ public class VendaController  {
         this.vendaService = vendaService;
     }
 
-    public void cadastrar(Venda venda, Vendedor vendedor, Cliente cliente) {
+    public void cadastrar(Venda venda, Vendedor vendedor, Cliente cliente) throws CpfJaExistenteException, UsuarioNaoCadastradoException {
         vendaService.cadastrarVenda(venda, vendedor, cliente);
     }
 
