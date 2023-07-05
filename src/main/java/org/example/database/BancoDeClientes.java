@@ -8,11 +8,13 @@ import java.util.List;
 public class BancoDeClientes {
     private List<Cliente> listaClientes = new ArrayList<>();
 
-    public void cadastrarCliente(Cliente cliente){
+    public boolean cadastrarCliente(Cliente cliente){
         listaClientes.add(cliente);
+        return true;
     }
 
     public List<Cliente> getListaClientes() {
         return listaClientes;
     }
+
 }

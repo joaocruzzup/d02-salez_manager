@@ -8,8 +8,9 @@ import java.util.List;
 public class BancoDeVendedores {
     private List<Vendedor> listaVendedores = new ArrayList<>();
 
-    public void cadastrarVendedor(Vendedor vendedor){
+    public boolean cadastrarVendedor(Vendedor vendedor){
         listaVendedores.add(vendedor);
+        return true;
     }
 
     public List<Vendedor> getListaVendedores() {

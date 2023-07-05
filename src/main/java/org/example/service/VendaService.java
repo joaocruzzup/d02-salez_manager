@@ -25,8 +25,6 @@ public class VendaService {
     private BancoDeVendas bancoDeVendas = new BancoDeVendas();
     private VendaValidador vendaValidador = new VendaValidador(bancoDeClientes, bancoDeVendedores);
 
-
-
     public void cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente) throws UsuarioNaoCadastradoException {
         boolean existeClienteVendedor = vendaValidador.validarCpfExiste(vendedor) && vendaValidador.validarCpfExiste(cliente);
         if (existeClienteVendedor){
