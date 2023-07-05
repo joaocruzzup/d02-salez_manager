@@ -34,7 +34,7 @@ public class VendaService {
         }
     }
 
-    public void cadastrarUsuario(Usuario usuario) throws CpfJaExistenteException, EmailInvalidoException, EmailRepetidoException {
+    public boolean cadastrarUsuario(Usuario usuario) throws CpfJaExistenteException, EmailInvalidoException, EmailRepetidoException {
         boolean emailValido = vendaValidador.validarEmail(usuario);
         boolean existeEmail = vendaValidador.validarEmailRepetido(usuario);
         boolean existeUsuario = vendaValidador.validarCpfExiste(usuario);
@@ -50,6 +50,7 @@ public class VendaService {
         } else if (existeEmail) {
             throw new EmailRepetidoException("Erro: E-mail já cadastrado");
         }
+        return true;
     }
 
     public void listarVendas() {
