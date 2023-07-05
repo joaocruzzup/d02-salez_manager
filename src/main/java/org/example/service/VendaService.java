@@ -60,14 +60,15 @@ public class VendaService {
     public void listarVendas() {
         if (bancoDeVendas.getListaVendas().size() == 0){
             System.out.println("Ainda não há vendas cadastradas no sistema");
-        }
-        for (Venda venda: bancoDeVendas.getListaVendas()) {
-            System.out.println(
-                    "PRODUTO: " + venda.getNomeProduto() +
-                            "CPF VENDEDOR: " + formatarCpf(venda.getVendedor().getCpf())  +
-                            " | CPF CLIENTE: " + formatarCpf(venda.getCliente().getCpf()) +
-                            " | VALOR: " + formatarValor(venda.getValor()) +
-                            " | DATA: " + formatarData(venda.getDataRegistro()));
+        } else {
+            for (Venda venda: bancoDeVendas.getListaVendas()) {
+                System.out.println(
+                        "PRODUTO: " + venda.getNomeProduto() +
+                                " | CPF VENDEDOR: " + formatarCpf(venda.getVendedor().getCpf())  +
+                                " | CPF CLIENTE: " + formatarCpf(venda.getCliente().getCpf()) +
+                                " | VALOR: " + formatarValor(venda.getValor()) +
+                                " | DATA: " + formatarData(venda.getDataRegistro()));
+            }
         }
     }
 
@@ -75,14 +76,17 @@ public class VendaService {
         List<Cliente> listaClientes = new ArrayList<>();
         if (bancoDeClientes.getListaClientes().size() == 0){
             System.out.println("Ainda não há clientes cadastrados no sistema");
+        } else {
+            for (Cliente cliente: bancoDeClientes.getListaClientes()) {
+                System.out.println(
+                        "NOME: " + cliente.getNome() +
+                                " | CPF: " + formatarCpf(cliente.getCpf()) +
+                                " | EMAIL: " + cliente.getEmail());
+                listaClientes.add(cliente);
+            }
+            return listaClientes;
         }
-        for (Cliente cliente: bancoDeClientes.getListaClientes()) {
-            System.out.println(
-                    "NOME: " + cliente.getNome() +
-                            " | CPF: " + formatarCpf(cliente.getCpf()) +
-                            " | EMAIL: " + cliente.getEmail());
-            listaClientes.add(cliente);
-        }
+
         return listaClientes;
     }
 
@@ -90,13 +94,15 @@ public class VendaService {
         List<Vendedor> listaVendedores = new ArrayList<>();
         if (bancoDeVendedores.getListaVendedores().size() == 0){
             System.out.println("Ainda não há vendedores cadastrados no sistema");
-        }
-        for (Vendedor vendedor: bancoDeVendedores.getListaVendedores()) {
-            System.out.println(
-                    "NOME: " + vendedor.getNome() +
-                            " | CPF: " + formatarCpf(vendedor.getCpf()) +
-                            " | EMAIL: " + vendedor.getEmail());
-            listaVendedores.add(vendedor);
+        } else {
+            for (Vendedor vendedor: bancoDeVendedores.getListaVendedores()) {
+                System.out.println(
+                        "NOME: " + vendedor.getNome() +
+                                " | CPF: " + formatarCpf(vendedor.getCpf()) +
+                                " | EMAIL: " + vendedor.getEmail());
+                listaVendedores.add(vendedor);
+                return listaVendedores;
+            }
         }
         return listaVendedores;
     }
@@ -109,14 +115,16 @@ public class VendaService {
             }
         }
         if (listaCompras.size() == 0){
+            System.out.println("----- Compras do cliente informado -----");
             System.out.println("Não há compras cadastradas para esse cliente");
-        }
-        System.out.println("Compras do cliente do CPF: " + cpf);
-        for (Venda venda: listaCompras) {
-            System.out.println("Produto comprado" + venda.getNomeProduto() +
-                    "Preço da compra: " + formatarValor(venda.getValor()) +
-                    " | Data da compra: " + formatarData(venda.getDataRegistro())  +
-                    " | Vendedor responsável: " + venda.getVendedor().getEmail());
+        } else {
+            System.out.println("----- Compras do cliente informado -----");
+            for (Venda venda: listaCompras) {
+                System.out.println("Produto comprado" + venda.getNomeProduto() +
+                        "Preço da compra: " + formatarValor(venda.getValor()) +
+                        " | Data da compra: " + formatarData(venda.getDataRegistro())  +
+                        " | Vendedor responsável: " + venda.getVendedor().getEmail());
+            }
         }
     }
 
@@ -128,14 +136,16 @@ public class VendaService {
             }
         }
         if (listaVendas.size() == 0){
+            System.out.println("----- Vendas do vendedor informado -----");
             System.out.println("Não há vendas cadastradas para esse vendedor");
-        }
-        System.out.println("Vendas do Vendedor do EMAIL: " + email);
-        for (Venda venda: listaVendas) {
-            System.out.println("Produto comprado: " + venda.getNomeProduto() +
-                    "Preço da compra: " + formatarValor(venda.getValor()) +
-                    " | Data da compra: " + formatarData(venda.getDataRegistro())  +
-                    " | Cliente: " + formatarCpf(venda.getCliente().getCpf()));
+        } else {
+            System.out.println("----- Vendas do vendedor informado -----");
+            for (Venda venda: listaVendas) {
+                System.out.println("Produto comprado: " + venda.getNomeProduto() +
+                        "Preço da compra: " + formatarValor(venda.getValor()) +
+                        " | Data da compra: " + formatarData(venda.getDataRegistro())  +
+                        " | Cliente: " + formatarCpf(venda.getCliente().getCpf()));
+            }
         }
     }
 

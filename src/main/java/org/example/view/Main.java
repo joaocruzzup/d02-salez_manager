@@ -1,8 +1,5 @@
 package org.example.view;
 
-import org.example.Exceptions.CpfJaExistenteException;
-import org.example.Exceptions.EmailInvalidoException;
-import org.example.Exceptions.EmailRepetidoException;
 import org.example.Exceptions.UsuarioNaoCadastradoException;
 import org.example.controller.ClienteController;
 import org.example.controller.VendaController;
@@ -33,68 +30,78 @@ public class Main {
         while (repetir) {
             imprimirMenuPrincipal();
             int opcao = selecionarOpcao(4);
+            limparConsole();
             switch (opcao) {
                 case 1:
+                    // Menu clientes
                     boolean repetirMenuCliente = true;
                     while (repetirMenuCliente) {
                         imprimirMenuCliente();
                         int opcaoCliente = selecionarOpcao(4);
+                        limparConsole();
                         if (opcaoCliente == 1) {
                             imprimirCadastroCliente(clienteController);
-                            sc.nextLine();
+                            exibirEnter();
                         } else if (opcaoCliente == 2) {
                             clienteController.listar();
-                            sc.nextLine();
+                            exibirEnter();
                         } else if (opcaoCliente == 3) {
                             System.out.println("Digite o CPF que deseja buscar as vendas: ");
                             System.out.print("Digite aqui: ");
                             String cpf = sc.nextLine();
+                            limparConsole();
                             clienteController.pesquisarVendas(cpf);
-                            sc.nextLine();
+                            exibirEnter();
                         } else if (opcaoCliente == 4) {
                             repetirMenuCliente = false;
                         }
                     }
                     break;
                 case 2:
+                    // Menu Vendedores
                     boolean repetirMenuVendedor = true;
                     while (repetirMenuVendedor) {
                         imprimirMenuVendedor();
                         int opcaoVendedor = selecionarOpcao(4);
+                        limparConsole();
                         if (opcaoVendedor == 1) {
                             imprimirCadastroVendedor(vendedorController);
-                            sc.nextLine();
+                            exibirEnter();
                         } else if (opcaoVendedor == 2) {
-                            vendaController.listar();
-                            sc.nextLine();
+                            vendedorController.listar();
+                            exibirEnter();
                         } else if (opcaoVendedor == 3) {
                             System.out.println("Digite o EMAIL que deseja buscar as vendas: ");
                             System.out.print("Digite aqui: ");
                             String cpf = sc.nextLine();
+                            limparConsole();
                             vendedorController.pesquisarVendas(cpf);
-                            sc.nextLine();
+                            exibirEnter();
                         } else if (opcaoVendedor == 4) {
                             repetirMenuVendedor = false;
                         }
                     }
                     break;
                 case 3:
+                    // Menu vendas
                     boolean repetirMenuVendas = true;
                     while (repetirMenuVendas) {
                         imprimirMenuVendas();
                         int opcaoVendas = selecionarOpcao(3);
+                        limparConsole();
                         if (opcaoVendas == 1) {
                             imprimirCadastroVenda(vendaController, clienteController, vendedorController);
-                            sc.nextLine();
+                            exibirEnter();
                         } else if (opcaoVendas == 2) {
                             vendaController.listar();
-                            sc.nextLine();
+                            exibirEnter();
                         } else if (opcaoVendas == 3) {
                             repetirMenuVendas = false;
                         }
                     }
                     break;
                 case 4:
+                    // Opção sair
                     System.exit(1);
                     sc.nextLine();
                     break;

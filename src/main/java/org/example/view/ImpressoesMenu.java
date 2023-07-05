@@ -19,16 +19,16 @@ public class ImpressoesMenu {
     }
 
     public static void imprimirMenuPrincipal(){
-        System.out.println("----- Menu Principal -----");
+        System.out.println("----------- Menu Principal -----------");
         System.out.println(
                 "1. Acessar seção Clientes\n" +
                 "2. Acessar seção Vendedores\n"+
                 "3. Acessar seção Vendas\n" +
-                "4. Sair\n");
+                "4. Sair do programa");
     }
 
     public static void imprimirMenuCliente(){
-        System.out.println("----- Menu Clientes -----");
+        System.out.println("----------- Menu Clientes -----------");
         System.out.println(
                 "1. Cadastrar Cliente\n" +
                 "2. Listar Clientes Cadastrados\n" +
@@ -37,7 +37,7 @@ public class ImpressoesMenu {
     }
 
     public static void imprimirMenuVendedor(){
-        System.out.println("----- Menu Vendedores -----");
+        System.out.println("----------- Menu Vendedores -----------");
         System.out.println(
                 "1. Cadastrar Vendedor\n" +
                 "2. Listar Vendedores Cadastrados\n" +
@@ -46,7 +46,7 @@ public class ImpressoesMenu {
     }
 
     public static void imprimirMenuVendas(){
-        System.out.println("----- Menu Vendas -----");
+        System.out.println("----------- Menu Vendas -----------");
         System.out.println(
                 "1. Cadastrar Venda\n" +
                 "2. Listar Vendas Cadastradas\n" +
@@ -57,14 +57,14 @@ public class ImpressoesMenu {
         Scanner sc = new Scanner(System.in);
         int opcao = 0;
         try {
-            System.out.print("Digite a opção: ");
+            System.out.print("\nDigite a opção que você deseja: ");
             opcao = sc.nextInt();
         } catch (InputMismatchException e){
             System.out.println("Erro: Tipo de entrada inválida! Digite um número");
             sc.nextLine();
         } finally {
             if (opcao <=0 || opcao > quantidadeOpcoes){
-                System.out.print("Opção inválida! \nDigite a opção: ");
+                System.out.print("Opção inválida! (Digite um número de 1 a " + quantidadeOpcoes + ")\nDigite a opção que você deseja: ");
                 opcao = sc.nextInt();
             }
         }
@@ -75,5 +75,12 @@ public class ImpressoesMenu {
         for (int i = 0; i < 20; i++) {
             System.out.println();
         }
+    }
+
+    public static void exibirEnter(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\nDigite * ENTER * para retornar ao Menu");
+        sc.nextLine();
+        limparConsole();
     }
 }
