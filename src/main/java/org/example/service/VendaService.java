@@ -1,9 +1,6 @@
 package org.example.service;
 
-import org.example.Exceptions.CpfJaExistenteException;
-import org.example.Exceptions.EmailInvalidoException;
-import org.example.Exceptions.EmailRepetidoException;
-import org.example.Exceptions.UsuarioNaoCadastradoException;
+import org.example.Exceptions.*;
 import org.example.database.BancoDeClientes;
 import org.example.database.BancoDeVendas;
 import org.example.database.BancoDeVendedores;
@@ -35,11 +32,13 @@ public class VendaService {
         }
     }
 
-    public boolean cadastrarUsuario(Usuario usuario) throws CpfJaExistenteException, EmailInvalidoException, EmailRepetidoException {
+    public boolean cadastrarUsuario(Usuario usuario) throws CpfJaExistenteException, EmailInvalidoException, EmailRepetidoException, CpfInvalidoException {
         boolean emailValido = vendaValidador.validarEmail(usuario);
+        boolean cpfValido = vendaValidador.validarCpf(usuario);
         boolean existeEmail = vendaValidador.validarEmailRepetido(usuario);
         boolean existeUsuario = vendaValidador.validarCpfExiste(usuario);
-        boolean validado = emailValido && !existeEmail && !existeUsuario;
+        boolean validado = emailValido && cpfValido && !existeEmail && !existeUsuario;
+
         if (validado && usuario instanceof Cliente){
             bancoDeClientes.cadastrarCliente((Cliente) usuario);
             return true;
@@ -49,39 +48,57 @@ public class VendaService {
         } else if (existeUsuario){
             throw new CpfJaExistenteException("Erro: CPF já cadastrado nesse tipo de usuário");
         } else if (!emailValido){
-            throw new EmailInvalidoException("Erro: E-mail inválido é necessário ter @");
+            throw new EmailInvalidoException("Erro: E-mail inválido. É necessário conter @");
         } else if (existeEmail) {
             throw new EmailRepetidoException("Erro: E-mail já cadastrado");
+        } else if (!cpfValido) {
+            throw new CpfInvalidoException("Erro: CPF inválido. É necessário haver 11 números");
         }
         return false;
     }
 
     public void listarVendas() {
+        if (bancoDeVendas.getListaVendas().size() == 0){
+            System.out.println("Ainda não há vendas cadastradas no sistema");
+        }
         for (Venda venda: bancoDeVendas.getListaVendas()) {
             System.out.println(
-                    "CPF VENDEDOR: " + formatarCpf(venda.getVendedor().getCpf())  +
+                    "PRODUTO: " + venda.getNomeProduto() +
+                            "CPF VENDEDOR: " + formatarCpf(venda.getVendedor().getCpf())  +
                             " | CPF CLIENTE: " + formatarCpf(venda.getCliente().getCpf()) +
                             " | VALOR: " + formatarValor(venda.getValor()) +
                             " | DATA: " + formatarData(venda.getDataRegistro()));
         }
     }
 
-    public void listarClientes() {
+    public List<Cliente> listarClientes() {
+        List<Cliente> listaClientes = new ArrayList<>();
+        if (bancoDeClientes.getListaClientes().size() == 0){
+            System.out.println("Ainda não há clientes cadastrados no sistema");
+        }
         for (Cliente cliente: bancoDeClientes.getListaClientes()) {
             System.out.println(
                     "NOME: " + cliente.getNome() +
                             " | CPF: " + formatarCpf(cliente.getCpf()) +
                             " | EMAIL: " + cliente.getEmail());
+            listaClientes.add(cliente);
         }
+        return listaClientes;
     }
 
-    public void listarVendedores() {
+    public List<Vendedor> listarVendedores() {
+        List<Vendedor> listaVendedores = new ArrayList<>();
+        if (bancoDeVendedores.getListaVendedores().size() == 0){
+            System.out.println("Ainda não há vendedores cadastrados no sistema");
+        }
         for (Vendedor vendedor: bancoDeVendedores.getListaVendedores()) {
             System.out.println(
                     "NOME: " + vendedor.getNome() +
                             " | CPF: " + formatarCpf(vendedor.getCpf()) +
                             " | EMAIL: " + vendedor.getEmail());
+            listaVendedores.add(vendedor);
         }
+        return listaVendedores;
     }
 
     public void pesquisarComprasCliente(String cpf){
@@ -122,4 +139,23 @@ public class VendaService {
         }
     }
 
+    public Usuario buscarCliente(String cpf) throws UsuarioNaoCadastradoException {
+        List<Cliente> listaClientes = listarClientes();
+        for (Cliente cliente: listaClientes) {
+            if (cliente.getCpf().equalsIgnoreCase(cpf)){
+                return cliente;
+            }
+        }
+        throw new UsuarioNaoCadastradoException("Erro: Usuário não cadastrado!");
+    }
+
+    public Usuario buscarVendedor(String cpf) throws UsuarioNaoCadastradoException {
+        List<Vendedor> listaVendedores = listarVendedores();
+        for (Vendedor vendedor: listaVendedores) {
+            if (vendedor.getCpf().equalsIgnoreCase(cpf)){
+                return vendedor;
+            }
+        }
+        throw new UsuarioNaoCadastradoException("Erro: Usuário não cadastrado!");
+    }
 }

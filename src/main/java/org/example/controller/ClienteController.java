@@ -1,14 +1,13 @@
 package org.example.controller;
 
-import org.example.Exceptions.CpfJaExistenteException;
-import org.example.Exceptions.EmailInvalidoException;
-import org.example.Exceptions.EmailRepetidoException;
+import org.example.Exceptions.*;
 import org.example.model.Usuario;
+import org.example.service.BuscaUsuario;
 import org.example.service.Cadastro;
 import org.example.service.PesquisaVenda;
 import org.example.service.VendaService;
 
-public class ClienteController implements Cadastro, PesquisaVenda {
+public class ClienteController implements Cadastro, PesquisaVenda, BuscaUsuario {
     private VendaService vendaService;
 
     public ClienteController(VendaService vendaService) {
@@ -16,7 +15,7 @@ public class ClienteController implements Cadastro, PesquisaVenda {
     }
 
     @Override
-    public void cadastrar(Usuario usuario) throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException {
+    public void cadastrar(Usuario usuario) throws CpfJaExistenteException, EmailRepetidoException, EmailInvalidoException, CpfInvalidoException {
         vendaService.cadastrarUsuario(usuario);
     }
 
@@ -28,5 +27,10 @@ public class ClienteController implements Cadastro, PesquisaVenda {
     @Override
     public void pesquisarVendas(String cpf) {
         vendaService.pesquisarComprasCliente(cpf);
+    }
+
+    @Override
+    public Usuario buscaUsuario(String cpf) throws UsuarioNaoCadastradoException {
+        return vendaService.buscarCliente(cpf);
     }
 }

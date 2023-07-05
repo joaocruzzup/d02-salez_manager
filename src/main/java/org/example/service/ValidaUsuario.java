@@ -10,4 +10,5 @@ public interface ValidaUsuario {
     public abstract boolean validarEmail(Usuario usuario) throws EmailInvalidoException;
     public abstract boolean validarEmailRepetido(Usuario usuario) throws EmailRepetidoException;
     public abstract boolean validarCpfExiste(Usuario usuario) throws CpfJaExistenteException;
+    public abstract boolean validarCpf(Usuario usuario);
 }

@@ -1,10 +1,9 @@
 package org.example.view;
 
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Impressoes {
+public class ImpressoesMenu {
     public static void imprimirTelaInicial(){
         String esp = " ";
         String texto1 = "SaleZ Manager";
@@ -22,45 +21,59 @@ public class Impressoes {
     public static void imprimirMenuPrincipal(){
         System.out.println("----- Menu Principal -----");
         System.out.println(
-                "1. Seção Clientes" +
-                "2. Seção Vendedores "+
-                "3. Seção Vendas" +
-                "4. Sair");
+                "1. Acessar seção Clientes\n" +
+                "2. Acessar seção Vendedores\n"+
+                "3. Acessar seção Vendas\n" +
+                "4. Sair\n");
     }
 
     public static void imprimirMenuCliente(){
         System.out.println("----- Menu Clientes -----");
         System.out.println(
-                "1. Cadastrar Cliente" +
-                "2. Listar Clientes Cadastrados" +
-                "3. Pesquisar Compras de Cliente específico");
+                "1. Cadastrar Cliente\n" +
+                "2. Listar Clientes Cadastrados\n" +
+                "3. Pesquisar Compras de Cliente específico pelo CPF\n" +
+                "4. Voltar ao Menu Principal");
     }
 
     public static void imprimirMenuVendedor(){
         System.out.println("----- Menu Vendedores -----");
         System.out.println(
-                "1. Cadastrar Vendedor" +
-                "2. Listar Vendedores Cadastrados" +
-                "3. Pesquisar Vendedor Específico");
+                "1. Cadastrar Vendedor\n" +
+                "2. Listar Vendedores Cadastrados\n" +
+                "3. Pesquisar Vendedor Específico pelo E-mail\n" +
+                "4. Voltar ao Menu Principal");
     }
 
     public static void imprimirMenuVendas(){
         System.out.println("----- Menu Vendas -----");
         System.out.println(
-                "1. Cadastrar Venda" +
-                "2. Listar Vendas Cadastrados");
+                "1. Cadastrar Venda\n" +
+                "2. Listar Vendas Cadastradas\n" +
+                "3. Voltar ao Menu principal");
     }
 
-    // Para esse metodo funcionar melhor, colocar num laço de repetição que irá repetir enquanto a opção for 0
-    public static int selecionarOpcao(){
+    public static int selecionarOpcao(int quantidadeOpcoes){
         Scanner sc = new Scanner(System.in);
         int opcao = 0;
         try {
             System.out.print("Digite a opção: ");
             opcao = sc.nextInt();
         } catch (InputMismatchException e){
-            System.out.println("Erro: " + e.getMessage());
+            System.out.println("Erro: Tipo de entrada inválida! Digite um número");
+            sc.nextLine();
+        } finally {
+            if (opcao <=0 || opcao > quantidadeOpcoes){
+                System.out.print("Opção inválida! \nDigite a opção: ");
+                opcao = sc.nextInt();
+            }
         }
         return opcao;
+    }
+
+    public static void limparConsole(){
+        for (int i = 0; i < 20; i++) {
+            System.out.println();
+        }
     }
 }
