@@ -5,7 +5,7 @@
 ## Sumário
 1. [O que é o SaleZ Manager?](#-o-que-é-o-salez-manager)
 2. [Funcionalidades do SaleZ Manager](#-funcionalidades-do-salez-manager)
-3. [Entendendo o Workflow do Projeto - Github Workflow](#-entendendo-o-workflow-do-projeto-github-workflow)
+3. [Entendendo o Workflow do Projeto - Github Workflow](#-entendendo-o-workflow-do-projeto---github-workflow)
 4. [Como executar?](#-como-executar)
 5. [Tutorial do Sistema](#-tutorial-do-sistema)
 6. [Assuntos do java utilizados](#-assuntos-do-java-utilizados)
@@ -34,24 +34,39 @@ Assim o objetivo do desafio era :
 As funcionalidades do Sistema estão de acordo o enunciado, então segue abaixo:
 
 📘 Funcionalidades Entrega Mínima
-🔹 O projeto permite cadastrar diversas vendas no sistema. 
+
+🔹 O projeto permite cadastrar diversas vendas no sistema.
+
 🔹 O sistema não permite cadastrar vendas para clientes não cadastrados. 
+
 🔹 O sistema não permite cadastrar vendas de vendedores não cadastrados.
-🔹 O sistema permite listar todas as vendas cadastradas. 
-🔹 O sistema permite listar todos os vendedores cadastrados. 
+
+🔹 O sistema permite listar todas as vendas cadastradas.
+
+🔹 O sistema permite listar todos os vendedores cadastrados.
+
 🔹 O sistema permite listar todos os clientes cadastrados.
 
 📙 Funcionalidades Entrega Média
+
 🔸 O sistema não permite cadastrar clientes com e-mail inválido (sem @). 
+
 🔸 O sistema não permite cadastrar vendedores com e-mail inválido (sem @). 
+
 🔸 O sistema não permite cadastrar clientes com CPFs repetidos. 
+
 🔸 O sistema não permite cadastrar vendedores com CPFs repetidos. 
+
 🔸 O sistema não permite cadastrar clientes com e-mails repetidos. 
+
 🔸 O sistema não permite cadastrar vendedores com e-mails repetidos.
 
 📘 Funcionalidades Entrega Máxima
+
 🔹 O sistema permite pesquisar todas as compras de um cliente em específico através de seu CPF. 
+
 🔹 O sistema permite pesquisar todas as vendas de um vendedor em específico através de seu e-mail. 
+
 🔹 O sistema contém uma cobertura de testes de 100%.
 
 ---
@@ -86,7 +101,7 @@ Segue abaixo a imagem do Github Worflow do Projeto:
 
 ---
 
-## ⏯️ Como executar?
+## ▶️ Como executar?
 
 - Você precisará ter o [JDK 11](https://www.oracle.com/java/technologies/downloads/#java11) instalado no seu computador;
 - Baixe o repositório do projeto;
