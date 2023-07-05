@@ -16,15 +16,24 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import static org.example.view.Impressoes.*;
 
 public class Main {
     public static void main(String[] args) throws CpfJaExistenteException, UsuarioNaoCadastradoException, EmailRepetidoException, EmailInvalidoException {
+        Scanner sc = new Scanner(System.in);
         // Criação dos controladores
         VendaService vendaService = new VendaService();
 
         ClienteController clienteController = new ClienteController(vendaService);
         VendedorController vendedorController = new VendedorController(vendaService);
         VendaController vendaController = new VendaController(vendaService);
+
+        imprimirTelaInicial();
+
+        selecionarOpcao();
+
 
         List<Cliente> listaClientes = new ArrayList<>();
         Cliente cliente1 = new Cliente("João", "12345678901", "joao@example.com");
