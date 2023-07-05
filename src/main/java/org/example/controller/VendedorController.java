@@ -25,13 +25,14 @@ public class VendedorController implements Cadastro, PesquisaVenda, BuscaUsuario
 
     @Override
     public void listar() {
-        vendaService.listarVendedores();
+        vendaService.imprimirVendedores();
     }
 
     @Override
     public void pesquisarVendas(String email) {
         vendaService.pesquisarVendasVendedor(email);
     }
+
 
     @Override
     public Usuario buscaUsuario(String cpf) throws UsuarioNaoCadastradoException {

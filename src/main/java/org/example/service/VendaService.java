@@ -24,7 +24,7 @@ public class VendaService {
 
     public boolean cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente) throws UsuarioNaoCadastradoException {
         boolean existeClienteVendedor = vendaValidador.validarCpfExiste(vendedor) && vendaValidador.validarCpfExiste(cliente);
-        if (existeClienteVendedor){
+        if (existeClienteVendedor) {
             bancoDeVendas.cadastrarVenda(venda, vendedor, cliente);
             return true;
         } else {
@@ -39,15 +39,15 @@ public class VendaService {
         boolean existeUsuario = vendaValidador.validarCpfExiste(usuario);
         boolean validado = emailValido && cpfValido && !existeEmail && !existeUsuario;
 
-        if (validado && usuario instanceof Cliente){
+        if (validado && usuario instanceof Cliente) {
             bancoDeClientes.cadastrarCliente((Cliente) usuario);
             return true;
-        } else if (validado && usuario instanceof Vendedor){
+        } else if (validado && usuario instanceof Vendedor) {
             bancoDeVendedores.cadastrarVendedor((Vendedor) usuario);
             return true;
-        } else if (existeUsuario){
+        } else if (existeUsuario) {
             throw new CpfJaExistenteException("Erro: CPF já cadastrado nesse tipo de usuário");
-        } else if (!emailValido){
+        } else if (!emailValido) {
             throw new EmailInvalidoException("Erro: E-mail inválido. É necessário conter @");
         } else if (existeEmail) {
             throw new EmailRepetidoException("Erro: E-mail já cadastrado");
@@ -58,13 +58,13 @@ public class VendaService {
     }
 
     public void listarVendas() {
-        if (bancoDeVendas.getListaVendas().size() == 0){
+        if (bancoDeVendas.getListaVendas().size() == 0) {
             System.out.println("Ainda não há vendas cadastradas no sistema");
         } else {
-            for (Venda venda: bancoDeVendas.getListaVendas()) {
+            for (Venda venda : bancoDeVendas.getListaVendas()) {
                 System.out.println(
                         "PRODUTO: " + venda.getNomeProduto() +
-                                " | CPF VENDEDOR: " + formatarCpf(venda.getVendedor().getCpf())  +
+                                " | CPF VENDEDOR: " + formatarCpf(venda.getVendedor().getCpf()) +
                                 " | CPF CLIENTE: " + formatarCpf(venda.getCliente().getCpf()) +
                                 " | VALOR: " + formatarValor(venda.getValor()) +
                                 " | DATA: " + formatarData(venda.getDataRegistro()));
@@ -72,87 +72,79 @@ public class VendaService {
         }
     }
 
-    public List<Cliente> listarClientes() {
-        List<Cliente> listaClientes = new ArrayList<>();
-        if (bancoDeClientes.getListaClientes().size() == 0){
-            System.out.println("Ainda não há clientes cadastrados no sistema");
-        } else {
-            for (Cliente cliente: bancoDeClientes.getListaClientes()) {
-                System.out.println(
-                        "NOME: " + cliente.getNome() +
-                                " | CPF: " + formatarCpf(cliente.getCpf()) +
-                                " | EMAIL: " + cliente.getEmail());
-                listaClientes.add(cliente);
-            }
-            return listaClientes;
-        }
-
-        return listaClientes;
-    }
-
-    public List<Vendedor> listarVendedores() {
-        List<Vendedor> listaVendedores = new ArrayList<>();
-        if (bancoDeVendedores.getListaVendedores().size() == 0){
+    public void imprimirClientes() {
+        List<Cliente> listaClientes = bancoDeClientes.getListaClientes();
+        System.out.println("----------------------- Clientes Cadastrados -----------------------");
+        if (bancoDeClientes.getListaClientes().size() == 0) {
             System.out.println("Ainda não há vendedores cadastrados no sistema");
         } else {
-            for (Vendedor vendedor: bancoDeVendedores.getListaVendedores()) {
-                System.out.println(
-                        "NOME: " + vendedor.getNome() +
-                                " | CPF: " + formatarCpf(vendedor.getCpf()) +
-                                " | EMAIL: " + vendedor.getEmail());
-                listaVendedores.add(vendedor);
-                return listaVendedores;
+            System.out.println("|  Nome do Cliente |     CPF do Cliente    |   E-mail do Cliente  |");
+            for (int i = 0; i < listaClientes.size(); i++) {
+                System.out.printf("|     %-10s   |     %-10s    |   %-10s   |%n",
+                        listaClientes.get(i).getNome(), formatarCpf(listaClientes.get(i).getCpf()), listaClientes.get(i).getEmail());
             }
         }
-        return listaVendedores;
     }
 
-    public void pesquisarComprasCliente(String cpf){
+    public void imprimirVendedores() {
+        List<Vendedor> listaVendedores = bancoDeVendedores.getListaVendedores();
+        System.out.println("----------------------- Vendedores Cadastrados -----------------------");
+        if (bancoDeVendedores.getListaVendedores().size() == 0) {
+            System.out.println("Ainda não há vendedores cadastrados no sistema");
+        } else {
+            System.out.println("| Nome do Vendedor |   CPF do Vendedor  |   E-mail do Vendedor     |");
+            for (int i = 0; i < listaVendedores.size(); i++) {
+                System.out.printf("|     %-10s   |     %-10s    |     %-10s     |%n",
+                        listaVendedores.get(i).getNome(), listaVendedores.get(i).getCpf(), listaVendedores.get(i).getEmail());
+            }
+        }
+    }
+
+    public void pesquisarComprasCliente(String cpf) {
         List<Venda> listaCompras = new ArrayList<>();
-        for (Venda venda: bancoDeVendas.getListaVendas()) {
-            if (venda.getCliente().getCpf().equalsIgnoreCase(cpf)){
+        for (Venda venda : bancoDeVendas.getListaVendas()) {
+            if (venda.getCliente().getCpf().equalsIgnoreCase(cpf)) {
                 listaCompras.add(venda);
             }
         }
-        if (listaCompras.size() == 0){
+        if (listaCompras.size() == 0) {
             System.out.println("----- Compras do cliente informado -----");
             System.out.println("Não há compras cadastradas para esse cliente");
         } else {
             System.out.println("----- Compras do cliente informado -----");
-            for (Venda venda: listaCompras) {
+            for (Venda venda : listaCompras) {
                 System.out.println("Produto comprado" + venda.getNomeProduto() +
                         "Preço da compra: " + formatarValor(venda.getValor()) +
-                        " | Data da compra: " + formatarData(venda.getDataRegistro())  +
+                        " | Data da compra: " + formatarData(venda.getDataRegistro()) +
                         " | Vendedor responsável: " + venda.getVendedor().getEmail());
             }
         }
     }
 
-    public void pesquisarVendasVendedor (String email){
+    public void pesquisarVendasVendedor(String email) {
         List<Venda> listaVendas = new ArrayList<>();
-        for (Venda venda: bancoDeVendas.getListaVendas()) {
-            if (venda.getVendedor().getEmail().equalsIgnoreCase(email)){
+        for (Venda venda : bancoDeVendas.getListaVendas()) {
+            if (venda.getVendedor().getEmail().equalsIgnoreCase(email)) {
                 listaVendas.add(venda);
             }
         }
-        if (listaVendas.size() == 0){
+        if (listaVendas.size() == 0) {
             System.out.println("----- Vendas do vendedor informado -----");
             System.out.println("Não há vendas cadastradas para esse vendedor");
         } else {
             System.out.println("----- Vendas do vendedor informado -----");
-            for (Venda venda: listaVendas) {
+            for (Venda venda : listaVendas) {
                 System.out.println("Produto comprado: " + venda.getNomeProduto() +
                         "Preço da compra: " + formatarValor(venda.getValor()) +
-                        " | Data da compra: " + formatarData(venda.getDataRegistro())  +
+                        " | Data da compra: " + formatarData(venda.getDataRegistro()) +
                         " | Cliente: " + formatarCpf(venda.getCliente().getCpf()));
             }
         }
     }
 
     public Usuario buscarCliente(String cpf) throws UsuarioNaoCadastradoException {
-        List<Cliente> listaClientes = listarClientes();
-        for (Cliente cliente: listaClientes) {
-            if (cliente.getCpf().equalsIgnoreCase(cpf)){
+        for (Cliente cliente : bancoDeClientes.getListaClientes()) {
+            if (cliente.getCpf().equalsIgnoreCase(cpf)) {
                 return cliente;
             }
         }
@@ -160,9 +152,8 @@ public class VendaService {
     }
 
     public Usuario buscarVendedor(String cpf) throws UsuarioNaoCadastradoException {
-        List<Vendedor> listaVendedores = listarVendedores();
-        for (Vendedor vendedor: listaVendedores) {
-            if (vendedor.getCpf().equalsIgnoreCase(cpf)){
+        for (Vendedor vendedor : bancoDeVendedores.getListaVendedores()) {
+            if (vendedor.getCpf().equalsIgnoreCase(cpf)) {
                 return vendedor;
             }
         }

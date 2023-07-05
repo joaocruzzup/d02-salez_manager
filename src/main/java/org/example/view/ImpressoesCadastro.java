@@ -104,11 +104,13 @@ public class ImpressoesCadastro {
             System.out.println("Digite o CPF do Cliente Responsável: ");
             String cpfCliente = sc.nextLine();
 
-            Cliente cliente = (Cliente) clienteController.buscaUsuario(cpfCliente);
-            Vendedor vendedor = (Vendedor) vendedorController.buscaUsuario(cpfVendedor);
-            Venda venda = new Venda(cliente, vendedor, preco, data, nome);
+
 
             try {
+                Cliente cliente = (Cliente) clienteController.buscaUsuario(cpfCliente);
+                Vendedor vendedor = (Vendedor) vendedorController.buscaUsuario(cpfVendedor);
+                Venda venda = new Venda(cliente, vendedor, preco, data, nome);
+
                 vendaController.cadastrar(venda, vendedor, cliente);
                 vendaCadastrada = true;
                 System.out.println("Venda cadastrado com sucesso!");
@@ -119,7 +121,5 @@ public class ImpressoesCadastro {
             }
         }
     }
-
-
 
 }

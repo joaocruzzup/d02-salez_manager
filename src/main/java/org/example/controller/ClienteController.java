@@ -21,7 +21,7 @@ public class ClienteController implements Cadastro, PesquisaVenda, BuscaUsuario 
 
     @Override
     public void listar() {
-        vendaService.listarClientes();
+        vendaService.imprimirClientes();
     }
 
     @Override
