@@ -1,6 +1,4 @@
-import org.example.database.BancoDeClientes;
 import org.example.database.BancoDeVendedores;
-import org.example.model.Cliente;
 import org.example.model.Vendedor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

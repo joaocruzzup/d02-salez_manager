@@ -1,4 +1,3 @@
-import org.example.database.BancoDeClientes;
 import org.example.database.BancoDeVendas;
 import org.example.model.Cliente;
 import org.example.model.Venda;
