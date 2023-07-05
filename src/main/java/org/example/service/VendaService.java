@@ -25,10 +25,11 @@ public class VendaService {
     private BancoDeVendas bancoDeVendas = new BancoDeVendas();
     private VendaValidador vendaValidador = new VendaValidador(bancoDeClientes, bancoDeVendedores);
 
-    public void cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente) throws UsuarioNaoCadastradoException {
+    public boolean cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente) throws UsuarioNaoCadastradoException {
         boolean existeClienteVendedor = vendaValidador.validarCpfExiste(vendedor) && vendaValidador.validarCpfExiste(cliente);
         if (existeClienteVendedor){
             bancoDeVendas.cadastrarVenda(venda, vendedor, cliente);
+            return true;
         } else {
             throw new UsuarioNaoCadastradoException("Erro: Cliente ou Vendedor não cadastrado");
         }
@@ -95,7 +96,8 @@ public class VendaService {
         }
         System.out.println("Compras do cliente do CPF: " + cpf);
         for (Venda venda: listaCompras) {
-            System.out.println("Preço da compra: " + formatarValor(venda.getValor()) +
+            System.out.println("Produto comprado" + venda.getNomeProduto() +
+                    "Preço da compra: " + formatarValor(venda.getValor()) +
                     " | Data da compra: " + formatarData(venda.getDataRegistro())  +
                     " | Vendedor responsável: " + venda.getVendedor().getEmail());
         }
@@ -113,7 +115,8 @@ public class VendaService {
         }
         System.out.println("Vendas do Vendedor do EMAIL: " + email);
         for (Venda venda: listaVendas) {
-            System.out.println("Preço da compra: " + formatarValor(venda.getValor()) +
+            System.out.println("Produto comprado: " + venda.getNomeProduto() +
+                    "Preço da compra: " + formatarValor(venda.getValor()) +
                     " | Data da compra: " + formatarData(venda.getDataRegistro())  +
                     " | Cliente: " + formatarCpf(venda.getCliente().getCpf()));
         }

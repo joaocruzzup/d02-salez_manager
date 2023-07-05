@@ -20,7 +20,7 @@ public class BancoDeVendasTest {
     public void cadastrarClienteTest(){
         Cliente cliente = new Cliente("Joao", "123456789", "joao@example.com");
         Vendedor vendedor = new Vendedor("Maria", "132456897", "maria@example.com");
-        Venda venda = new Venda(cliente, vendedor, BigDecimal.valueOf(200.0), LocalDate.now());
+        Venda venda = new Venda(cliente, vendedor, BigDecimal.valueOf(200.0), LocalDate.now(), "feijao");
 
         Mockito.when(bancoDeVendas.cadastrarVenda(venda, vendedor, cliente)).thenReturn(true);
         bancoDeVendas.cadastrarVenda(venda, vendedor, cliente);
