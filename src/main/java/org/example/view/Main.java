@@ -118,6 +118,12 @@ public class Main {
         System.out.println("\nClientes cadastrados:");
         clienteController.listar();
 
+        System.out.println("\nLista Compras de Cliente");
+        clienteController.pesquisarVendas("12345678901");
+
+        System.out.println("\nLista Vendas do vendedor");
+        vendedorController.pesquisarVendas("joao@example.com");
+
 
     }
 }
