@@ -10,10 +10,11 @@ import java.util.List;
 public class BancoDeVendas {
     private List<Venda> listaVendas = new ArrayList<>();
 
-    public void cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente){
+    public boolean cadastrarVenda(Venda venda, Vendedor vendedor, Cliente cliente){
         venda.setCliente(cliente);
         venda.setVendedor(vendedor);
         listaVendas.add(venda);
+        return true;
     }
 
     public List<Venda> getListaVendas() {
