@@ -91,12 +91,12 @@ public class Main {
         }
 
         List<Venda> listaVendas = new ArrayList<>();
-        Venda venda1 = new Venda(cliente1, vendedor1, BigDecimal.valueOf(100.0), LocalDate.now());
-        Venda venda2 = new Venda(cliente2, vendedor2, BigDecimal.valueOf(200.0), LocalDate.now());
-        Venda venda3 = new Venda(cliente3, vendedor3, BigDecimal.valueOf(200.0), LocalDate.now());
-        Venda venda4 = new Venda(cliente4, vendedor4, BigDecimal.valueOf(200.0), LocalDate.now());
-        Venda venda5 = new Venda(cliente5, vendedor5, BigDecimal.valueOf(200.0), LocalDate.now());
-        Venda venda6 = new Venda(cliente6, vendedor6, BigDecimal.valueOf(200.0), LocalDate.now());
+        Venda venda1 = new Venda(cliente1, vendedor1, BigDecimal.valueOf(100.0), LocalDate.now(), "Arroz");
+        Venda venda2 = new Venda(cliente2, vendedor2, BigDecimal.valueOf(200.0), LocalDate.now(), "Farofa");
+        Venda venda3 = new Venda(cliente3, vendedor3, BigDecimal.valueOf(200.0), LocalDate.now(), "Computador");
+        Venda venda4 = new Venda(cliente4, vendedor4, BigDecimal.valueOf(200.0), LocalDate.now(), "Feijao");
+        Venda venda5 = new Venda(cliente5, vendedor5, BigDecimal.valueOf(200.0), LocalDate.now(), "Lasanha");
+        Venda venda6 = new Venda(cliente6, vendedor6, BigDecimal.valueOf(200.0), LocalDate.now(), "Macarrao");
         listaVendas.add(venda1);
         listaVendas.add(venda2);
         listaVendas.add(venda3);

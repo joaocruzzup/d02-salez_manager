@@ -8,12 +8,14 @@ public class Venda {
     private Vendedor vendedor;
     private BigDecimal valor;
     private LocalDate dataRegistro;
+    private String nomeProduto;
 
-    public Venda(Cliente cliente, Vendedor vendedor, BigDecimal valor, LocalDate dataRegistro) {
+    public Venda(Cliente cliente, Vendedor vendedor, BigDecimal valor, LocalDate dataRegistro, String nomeProduto) {
         this.cliente = cliente;
         this.vendedor = vendedor;
         this.valor = valor;
         this.dataRegistro = dataRegistro;
+        this.nomeProduto = nomeProduto;
     }
 
     public Cliente getCliente() {
@@ -46,5 +48,13 @@ public class Venda {
 
     public void setDataRegistro(LocalDate dataRegistro) {
         this.dataRegistro = dataRegistro;
+    }
+
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
     }
 }
