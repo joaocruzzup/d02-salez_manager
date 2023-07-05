@@ -48,6 +48,16 @@ public class VendaValidador implements ValidaUsuario {
     }
 
     @Override
+    public boolean validarCpf(Usuario usuarioDigitado){
+        String cpf = usuarioDigitado.getCpf().replaceAll("\\D", "");
+        if (cpf.length() != 11){
+            return false;
+        }
+        return true;
+    }
+
+
+    @Override
     public boolean validarCpfExiste(Usuario usuarioDigitado) {
         if (usuarioDigitado instanceof Cliente) {
             for (Cliente usuario : bancoDeClientes.getListaClientes()) {
