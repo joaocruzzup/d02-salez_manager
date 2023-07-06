@@ -2,9 +2,9 @@ package org.example.controller;
 
 import org.example.Exceptions.*;
 import org.example.model.Usuario;
-import org.example.service.BuscaUsuario;
-import org.example.service.Cadastro;
-import org.example.service.PesquisaVenda;
+import org.example.interfaces.BuscaUsuario;
+import org.example.interfaces.Cadastro;
+import org.example.interfaces.PesquisaVenda;
 import org.example.service.VendaService;
 
 public class ClienteController implements Cadastro, PesquisaVenda, BuscaUsuario {

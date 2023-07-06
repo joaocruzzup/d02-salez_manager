@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.interfaces;
 
 import org.example.Exceptions.CpfJaExistenteException;
 import org.example.Exceptions.EmailInvalidoException;

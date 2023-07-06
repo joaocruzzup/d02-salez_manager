@@ -11,6 +11,8 @@ import org.example.model.Vendedor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ImpressoesCadastro {
@@ -80,44 +82,48 @@ public class ImpressoesCadastro {
         }
     }
 
-    public static void imprimirCadastroVenda(VendaController vendaController, ClienteController clienteController, VendedorController vendedorController) throws UsuarioNaoCadastradoException {
+    public static void imprimirCadastroVenda(VendaController vendaController, ClienteController clienteController, VendedorController vendedorController) {
         Scanner sc = new Scanner(System.in);
 
         boolean vendaCadastrada = false;
 
         while (!vendaCadastrada) {
-            System.out.println("Digite o nome do Produto: ");
-            String nome = sc.nextLine();
-
-            System.out.println("Digite o preço do Produto: ");
-            BigDecimal preco = sc.nextBigDecimal();
-            sc.nextLine();
-
-            System.out.println("Digite a data da venda do Produto: no formato (dd/MM/yyyy)");
-            String dataEmString = sc.nextLine();
-            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate data = LocalDate.parse(dataEmString, formatador);
-
-            System.out.println("Digite o CPF do Vendedor Responsável: ");
-            String cpfVendedor = sc.nextLine();
-
-            System.out.println("Digite o CPF do Cliente Responsável: ");
-            String cpfCliente = sc.nextLine();
-
-
-
             try {
+                System.out.println("Digite o nome do Produto: ");
+                String nome = sc.nextLine();
+
+                System.out.println("Digite o preço do Produto: ");
+                BigDecimal preco = sc.nextBigDecimal();
+                sc.nextLine();
+
+                System.out.println("Digite a data da venda do Produto: no formato (dd/MM/yyyy)");
+                String dataEmString = sc.nextLine();
+                DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate data = LocalDate.parse(dataEmString, formatador);
+
+                System.out.println("Digite o CPF do Vendedor Responsável: ");
+                String cpfVendedor = sc.nextLine();
+
+                System.out.println("Digite o CPF do Cliente Responsável: ");
+                String cpfCliente = sc.nextLine();
+
                 Cliente cliente = (Cliente) clienteController.buscaUsuario(cpfCliente);
                 Vendedor vendedor = (Vendedor) vendedorController.buscaUsuario(cpfVendedor);
                 Venda venda = new Venda(cliente, vendedor, preco, data, nome);
 
                 vendaController.cadastrar(venda, vendedor, cliente);
                 vendaCadastrada = true;
-                System.out.println("Venda cadastrado com sucesso!");
+                System.out.println("Venda cadastrada com sucesso!");
+
             } catch (CpfJaExistenteException e) {
-                System.out.println(e.getMessage() + "\nTente Cadastrar novamente com os dados corretos.");
+                System.out.println(e.getMessage() + "\nTente cadastrar novamente com os dados corretos.");
             } catch (UsuarioNaoCadastradoException e) {
-                System.out.println(e.getMessage() + "\nTente Cadastrar novamente com os dados corretos.");
+                System.out.println(e.getMessage() + "\nTente cadastrar novamente com os dados corretos.");
+            } catch (DateTimeParseException e) {
+                System.out.println("Erro: Data inválida, digite no formato (dd/MM/yyyy)." + "\nTente cadastrar novamente com os dados corretos.");
+            } catch (InputMismatchException e) {
+                System.out.println("Erro: Valor inválido. Digite valores numéricos com vírgula." + "\nTente cadastrar novamente com os dados corretos.");
+                sc.nextLine();
             }
         }
     }

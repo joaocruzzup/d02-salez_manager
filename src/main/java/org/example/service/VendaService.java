@@ -58,16 +58,17 @@ public class VendaService {
     }
 
     public void listarVendas() {
+        List<Venda> listaVendas = bancoDeVendas.getListaVendas();
         if (bancoDeVendas.getListaVendas().size() == 0) {
+            System.out.println("----------------------- Vendas Cadastradas -----------------------");
             System.out.println("Ainda não há vendas cadastradas no sistema");
         } else {
-            for (Venda venda : bancoDeVendas.getListaVendas()) {
-                System.out.println(
-                        "PRODUTO: " + venda.getNomeProduto() +
-                                " | CPF VENDEDOR: " + formatarCpf(venda.getVendedor().getCpf()) +
-                                " | CPF CLIENTE: " + formatarCpf(venda.getCliente().getCpf()) +
-                                " | VALOR: " + formatarValor(venda.getValor()) +
-                                " | DATA: " + formatarData(venda.getDataRegistro()));
+            System.out.println("--------------------------- Vendas Cadastradas ---------------------------");
+            System.out.println("|   PRODUTO   |    VALOR    |  DATA DE COMPRA  | EMAIL VENDEDOR |   CPF CLIENTE   |");
+            for (int i = 0; i < bancoDeVendas.getListaVendas().size(); i++) {
+                System.out.printf("|    %-7s  |   %-8s  |   %-10s     |   %-10s   |  %-8s |  %n",
+                        listaVendas.get(i).getNomeProduto(), formatarValor(listaVendas.get(i).getValor()), formatarData(listaVendas.get(i).getDataRegistro()),
+                        listaVendas.get(i).getVendedor().getEmail(), formatarCpf(listaVendas.get(i).getCliente().getCpf()));
             }
         }
     }
@@ -108,15 +109,15 @@ public class VendaService {
             }
         }
         if (listaCompras.size() == 0) {
-            System.out.println("----- Compras do cliente informado -----");
+            System.out.println("----------------------- Compras do Cliente informado -----------------------");
             System.out.println("Não há compras cadastradas para esse cliente");
         } else {
-            System.out.println("----- Compras do cliente informado -----");
-            for (Venda venda : listaCompras) {
-                System.out.println("Produto comprado" + venda.getNomeProduto() +
-                        "Preço da compra: " + formatarValor(venda.getValor()) +
-                        " | Data da compra: " + formatarData(venda.getDataRegistro()) +
-                        " | Vendedor responsável: " + venda.getVendedor().getEmail());
+            System.out.println("----------------------- Compras do Cliente informado -----------------------");
+            System.out.println("|   PRODUTO   |    VALOR    |  DATA DE COMPRA  | EMAIL VENDEDOR |");
+            for (int i = 0; i < bancoDeVendas.getListaVendas().size(); i++) {
+                System.out.printf("|    %-7s  |   %-8s  |   %-10s     |   %-10s   |  %n",
+                        listaCompras.get(i).getNomeProduto(), formatarValor(listaCompras.get(i).getValor()), formatarData(listaCompras.get(i).getDataRegistro()),
+                        listaCompras.get(i).getVendedor().getEmail());
             }
         }
     }
@@ -129,15 +130,15 @@ public class VendaService {
             }
         }
         if (listaVendas.size() == 0) {
-            System.out.println("----- Vendas do vendedor informado -----");
+            System.out.println("----------------------- Vendas do Vendedor informado -----------------------");
             System.out.println("Não há vendas cadastradas para esse vendedor");
         } else {
-            System.out.println("----- Vendas do vendedor informado -----");
-            for (Venda venda : listaVendas) {
-                System.out.println("Produto comprado: " + venda.getNomeProduto() +
-                        "Preço da compra: " + formatarValor(venda.getValor()) +
-                        " | Data da compra: " + formatarData(venda.getDataRegistro()) +
-                        " | Cliente: " + formatarCpf(venda.getCliente().getCpf()));
+            System.out.println("----------------------- Vendas do Vendedor informado -----------------------");
+            System.out.println("|   PRODUTO   |    VALOR    |  DATA DE COMPRA  |    CPF CLIENTE    |");
+            for (int i = 0; i < bancoDeVendas.getListaVendas().size(); i++) {
+                System.out.printf("|    %-7s  |   %-8s  |   %-10s     |   %-10s   |  %n",
+                        listaVendas.get(i).getNomeProduto(), formatarValor(listaVendas.get(i).getValor()), formatarData(listaVendas.get(i).getDataRegistro()),
+                        formatarCpf(listaVendas.get(i).getCliente().getCpf()));
             }
         }
     }

@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.interfaces;
 
 import org.example.Exceptions.UsuarioNaoCadastradoException;
 import org.example.model.Usuario;
